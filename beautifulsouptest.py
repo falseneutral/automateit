@@ -15,4 +15,4 @@ print soup.select('.wow')
 
 print "Facebook URL:", soup.find_all('a')[0]['href']
 print "Inventor: ", soup.find('div', {"id":"inventor"}).text
-print "Span Content:", soup.select('span')[0].getText()
+print "Span Content: ", soup.select('span')[0].getText()
