@@ -5,27 +5,23 @@ BASE_URL = 'https://api.github.com'
 Link_URL = 'https://gist.github.com'
 
 username = 'falseneutral'
-api_token = '3132b993033079d077396e3347ad83dfc01f63bd'
-gist_id = 'fc4cee21f20ef9642ac4e797f1cc16d1'
+api_token = 'ed6ce3e54f739df73df0627de9e34d7ab3d89802'
 
 header = { 'X-Github-Username': '%s' % username,
            'Content-Type': 'application/json',
            'Authorization': 'token %s' % api_token,
            }
-data = {
-    "description": "updating the description for this gist",
-    "public": True,
-    "files": {
-        "file1.txt" : {
-        "content": "Updating file contents..."
-        }
-    }
-}
 
-url = '/gists/%s' % gist_id
+url = '/users/%s/gists' % username
 
-r = requests.patch('%s%s' % (BASE_URL, url),
-                  headers=header,
-                   data=json.dumps(data)
+r = requests.get('%s%s' % (BASE_URL, url),
+                  headers=header
                   )
-print r.json()
+
+gists = r.json()
+
+for gist in gists:
+    data = gist['files'].values()[0]
+    print data['filename'],
+    data['raw_url'], data['language']
+
